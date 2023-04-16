@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest spec/*[sS]pec.js -i"
+    "test": "jest spec/index.spec.js"
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,7 @@
-const fs = require("fs");
+const fs = require('fs');
 //получаем массив из файла
-const getArrFromFile = (url) =>
-  fs
-    .readFileSync(url, "utf8")
-    .split("\n")
-    .map((str) => str.split(",").map((str) => str.trim()));
+const getArrFromFile = url =>
+  fs.readFileSync(url, 'utf8').split('\n').map(str => str.split(',').map(str => str.trim()));
 
 //получаем объект из массивва
 function getObject(arr) {
@@ -18,11 +15,11 @@ function getObject(arr) {
   return mainObj;
 }
 
-const crew = getArrFromFile("src/crew.txt");
+const crew = getArrFromFile('src/crew.txt');
 const crewObj = getObject(crew);
-const equipment = getArrFromFile("src/equipment.txt");
+const equipment = getArrFromFile('src/equipment.txt');
 const equipmentObj = getObject(equipment);
-const rockets = getArrFromFile("src/rockets.txt");
+const rockets = getArrFromFile('src/rockets.txt');
 const rocketsObj = getObject(rockets);
 
 //позволяет выбрать самого опытного капитана
@@ -31,18 +28,11 @@ function getRightCaptain() {
   let result;
   for (key in crewObj) {
     if (
-      crewObj[key]["Должность"] == "Капитан" &&
-      Number(crewObj[key]["Стаж"]) > experience
+      crewObj[key]['Должность'] == 'Капитан' &&
+      Number(crewObj[key]['Стаж']) > experience
     ) {
-      experience = Number(crewObj[key]["Стаж"]);
-      result =
-        crewObj[key]["Имя"] +
-        ", " +
-        crewObj[key]["пол (м/ж)"] +
-        ", " +
-        crewObj[key]["Должность"] +
-        ", " +
-        crewObj[key]["Стаж"];
+      experience = Number(crewObj[key]['Стаж']);
+      result = Object.values(crewObj[key]).join(', ');
     }
   }
   return result;
@@ -54,19 +44,12 @@ function getRightDoc() {
   let result;
   for (key in crewObj) {
     if (
-      crewObj[key]["Должность"] == "Врач" &&
-      crewObj[key]["пол (м/ж)"] == "ж" &&
-      Number(crewObj[key]["Стаж"]) > experience
+      crewObj[key]['Должность'] == 'Врач' &&
+      crewObj[key]['пол (м/ж)'] == 'ж' &&
+      Number(crewObj[key]['Стаж']) > experience
     ) {
-      experience = Number(crewObj[key]["Стаж"]);
-      result =
-        crewObj[key]["Имя"] +
-        ", " +
-        crewObj[key]["пол (м/ж)"] +
-        ", " +
-        crewObj[key]["Должность"] +
-        ", " +
-        crewObj[key]["Стаж"];
+      experience = Number(crewObj[key]['Стаж']);
+      result = Object.values(crewObj[key]).join(', ');
     }
   }
   return result;
@@ -76,16 +59,8 @@ function getRightDoc() {
 function getAllEngineer() {
   let result = [];
   for (key in crewObj) {
-    if (crewObj[key]["Должность"] == "Бортмеханик") {
-      result.push(
-        crewObj[key]["Имя"] +
-          ", " +
-          crewObj[key]["пол (м/ж)"] +
-          ", " +
-          crewObj[key]["Должность"] +
-          ", " +
-          crewObj[key]["Стаж"]
-      );
+    if (crewObj[key]['Должность'] == 'Бортмеханик') {
+      result.push(Object.values(crewObj[key]).join(', '));
     }
   }
   return result;
@@ -95,14 +70,8 @@ function getAllEngineer() {
 function getAllRover() {
   let result = [];
   for (key in equipmentObj) {
-    if (equipmentObj[key]["Тип оборудования"] == "марсоход") {
-      result.push(
-        equipmentObj[key]["Название оборудования"] +
-          ", " +
-          equipmentObj[key]["Тип оборудования"] +
-          ", " +
-          equipmentObj[key]["Предполагаемый срок службы (в годах)"]
-      );
+    if (equipmentObj[key]['Тип оборудования'] == 'марсоход') {
+      result.push(Object.values(equipmentObj[key]).join(', '));
     }
   }
   return result;
@@ -113,16 +82,10 @@ function getRightRovers() {
   let result = [];
   for (key in equipmentObj) {
     if (
-      equipmentObj[key]["Тип оборудования"] == "марсоход" &&
-      Number(equipmentObj[key]["Предполагаемый срок службы (в годах)"]) > 3
+      equipmentObj[key]['Тип оборудования'] == 'марсоход' &&
+      Number(equipmentObj[key]['Предполагаемый срок службы (в годах)']) > 3
     ) {
-      result.push(
-        equipmentObj[key]["Название оборудования"] +
-          ", " +
-          equipmentObj[key]["Тип оборудования"] +
-          ", " +
-          equipmentObj[key]["Предполагаемый срок службы (в годах)"]
-      );
+      result.push(Object.values(equipmentObj[key]).join(', '));
     }
   }
   return result;
@@ -133,14 +96,9 @@ function getRightRocket() {
   let range = 0;
   let result;
   for (key in rocketsObj) {
-    if (Number(rocketsObj[key]["дальность полета (тыс. км.)"]) > range) {
-      range = Number(rocketsObj[key]["дальность полета (тыс. км.)"]);
-      result =
-        rocketsObj[key]["Название ракеты"] +
-        ", " +
-        rocketsObj[key]["тип ракеты"] +
-        ", " +
-        rocketsObj[key]["дальность полета (тыс. км.)"];
+    if (Number(rocketsObj[key]['дальность полета (тыс. км.)']) > range) {
+      range = Number(rocketsObj[key]['дальность полета (тыс. км.)']);
+      result = Object.values(rocketsObj[key]).join(', ');
     }
   }
   return result;
